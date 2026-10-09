@@ -560,25 +560,28 @@ print(json.dumps(dict(arm_id=arm, recipe=r, recipe_sha256=sha)))
 PY
 }
 
-# build_checkpoint ARM_ID → echoes ckpt dir; no-op for base-model arms
+# build_checkpoint ARM_ID → builds/validates the ckpt at deterministic $CKPT_ROOT/$arm.
+# Prints NOTHING to stdout: builder libraries (llmcompressor loguru) log to stdout,
+# so this function must NEVER be called inside $() — callers construct the path.
+# No-op for base-model arms; reuse path returns early when custody log + dir agree.
 build_checkpoint() {   # $1 = arm_id
   local arm="$1"
   local rjson; rjson="$(LOCAL_RECIPE_LOG="$LOCAL_RECIPE_LOG" get_recipe "$arm")" || die "cannot resolve recipe for $arm"
   local uses_base; uses_base="$(printf '%s' "$rjson" | python3 -c "import json,sys; print(json.load(sys.stdin)['recipe']['uses_base_model'])")"
-  if [ "$uses_base" = "True" ]; then echo ""; return 0; fi
+  if [ "$uses_base" = "True" ]; then return 0; fi
   local cdir="$CKPT_ROOT/$arm"
   if [ -f "$CKPT_LOG" ] && grep -q "\"arm_id\": \"$arm\"" "$CKPT_LOG" 2>/dev/null && [ -d "$cdir" ]; then
-    echo "$cdir"; return 0
+    echo "checkpoint for $arm already built — reuse: $cdir" >&2; return 0
   fi
   if [ "${STAGE07_MOCK_BUILD:-0}" = "1" ]; then
     mkdir -p "$cdir"; echo '{"mock": true}' > "$cdir/config.json"
-    echo "TEST HOOK: mock checkpoint for $arm at $cdir" >&2; echo "$cdir"; return 0
+    echo "TEST HOOK: mock checkpoint for $arm at $cdir" >&2; return 0
   fi
   FREE_GB=$(df --output=avail -BG "$HOME" | tail -1 | tr -dc '0-9')
   [ "${FREE_GB:-0}" -ge 50 ] || die "disk headroom < 50GB for checkpoint build (14B fp8 ckpt ≈ 16GB on top of base weights)"
   note "building checkpoint for $arm (llmcompressor oneshot; builder version is provenance — the measured artifact is the checkpoint hash)" >&2
   RJSON="$rjson" CKPT_DIR="$cdir" CALIB_JSONL="$CALIB_JSONL" MODEL="$MODEL" MODEL_REV="$MODEL_REV" \
-  RECIPE_LOG="$RECIPE_LOG" CKPT_LOG="$CKPT_LOG" python3 - <<'PY'
+  RECIPE_LOG="$RECIPE_LOG" CKPT_LOG="$CKPT_LOG" LOCAL_RECIPE_LOG="$LOCAL_RECIPE_LOG" python3 - <<'PY'
 import hashlib, json, os, time
 spec = json.loads(os.environ["RJSON"])
 arm, recipe = spec["arm_id"], spec["recipe"]
@@ -635,8 +638,10 @@ with open(os.environ["LOCAL_RECIPE_LOG"], "a") as f:
 import sys
 print(f"checkpoint built: {arm} sha256={csha[:16]}… llmcompressor={ver} ({public['build_seconds']}s)", file=sys.stderr)
 PY
-  [ -f "$cdir/config.json" ] || { echo "checkpoint incomplete for $arm: $cdir missing config.json" >&2; return 1; }
-  echo "$cdir"
+  if [ ! -f "$cdir/config.json" ] || ! ls "$cdir"/*.safetensors >/dev/null 2>&1; then
+    echo "checkpoint incomplete for $arm: $cdir (need config.json + at least one .safetensors shard)" >&2; return 1
+  fi
+  echo "checkpoint ready: $cdir" >&2
 }
 
 # ---------- server lifecycle (same craft as stage 05) ----------
@@ -954,9 +959,8 @@ run_arm() {   # $1 = arm_id
   if [ "$kind" = "BASE" ]; then
     generate_arm "$arm" "$MODEL" "$extra" "$gen_jsonl"
   else
-    local cdir
-    cdir="$(build_checkpoint "$arm")" || die "checkpoint build failed for $arm"
-    [ -n "$cdir" ] || die "empty checkpoint dir for $arm"
+    build_checkpoint "$arm" || die "checkpoint build failed for $arm"
+    local cdir="$CKPT_ROOT/$arm"   # deterministic path — never capture builder stdout into a variable
     generate_arm "$arm" "$cdir" "$extra" "$gen_jsonl"
     if [ "${STAGE07_MOCK_BUILD:-0}" != "1" ]; then
       rm -rf "$cdir" && echo "arm $arm: checkpoint deleted after generation (hash anchor in checkpoints.jsonl)"
