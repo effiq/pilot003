@@ -576,7 +576,7 @@ build_checkpoint() {   # $1 = arm_id
   fi
   FREE_GB=$(df --output=avail -BG "$HOME" | tail -1 | tr -dc '0-9')
   [ "${FREE_GB:-0}" -ge 50 ] || die "disk headroom < 50GB for checkpoint build (14B fp8 ckpt ≈ 16GB on top of base weights)"
-  note "building checkpoint for $arm (llmcompressor oneshot; builder version is provenance — the measured artifact is the checkpoint hash)"
+  note "building checkpoint for $arm (llmcompressor oneshot; builder version is provenance — the measured artifact is the checkpoint hash)" >&2
   RJSON="$rjson" CKPT_DIR="$cdir" CALIB_JSONL="$CALIB_JSONL" MODEL="$MODEL" MODEL_REV="$MODEL_REV" \
   RECIPE_LOG="$RECIPE_LOG" CKPT_LOG="$CKPT_LOG" python3 - <<'PY'
 import hashlib, json, os, time
@@ -632,7 +632,8 @@ for path in (os.environ["RECIPE_LOG"], os.environ["CKPT_LOG"]):
 os.makedirs(os.path.dirname(os.environ["LOCAL_RECIPE_LOG"]), exist_ok=True)
 with open(os.environ["LOCAL_RECIPE_LOG"], "a") as f:
     f.write(json.dumps(dict(public, recipe=recipe), sort_keys=True) + "\n")
-print(f"checkpoint built: {arm} sha256={csha[:16]}… llmcompressor={ver} ({public['build_seconds']}s)")
+import sys
+print(f"checkpoint built: {arm} sha256={csha[:16]}… llmcompressor={ver} ({public['build_seconds']}s)", file=sys.stderr)
 PY
   [ -f "$cdir/config.json" ] || { echo "checkpoint incomplete for $arm: $cdir missing config.json" >&2; return 1; }
   echo "$cdir"
