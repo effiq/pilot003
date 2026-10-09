@@ -1,0 +1,89 @@
+{
+  "arms": [
+    {
+      "arm_id": "a1-control",
+      "lever_classes": [
+        "control-baseline"
+      ],
+      "recipe_sha256": "de55c8bc29950d290e0aaa85b03209a661fe18adeefffcf61ca00005a8554e69",
+      "serve_extra": "--quantization fp8",
+      "uses_base_model": true,
+      "wave": 1
+    },
+    {
+      "arm_id": "a2-smooth",
+      "lever_classes": [
+        "activation-smoothing"
+      ],
+      "recipe_sha256": "0785c06100c723f4bde5192b5219c54a2f1d0ff6b4dd14340f6568f2dcbaebf1",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 1
+    },
+    {
+      "arm_id": "a3-calib-static",
+      "lever_classes": [
+        "domain-calibration-static-scales"
+      ],
+      "recipe_sha256": "9c95595ccf1942ffd0c033ea9dfbd258025a9729fb0d9b1b897ff80dca72d3fe",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 1
+    },
+    {
+      "arm_id": "a4-exempt-attn",
+      "lever_classes": [
+        "sensitive-layer-exemption:attention"
+      ],
+      "recipe_sha256": "5065e67e9948f3085957eeba5e29e14afd773636e0d146f639622549e68c3df8",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 1
+    },
+    {
+      "arm_id": "a5-exempt-down",
+      "lever_classes": [
+        "sensitive-layer-exemption:mlp-down-proj"
+      ],
+      "recipe_sha256": "c594b379f8aae4ddad9abe343d7cb44a3a2964f378dadd33750baf9d26c7cd85",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 1
+    },
+    {
+      "arm_id": "a6-all",
+      "lever_classes": [
+        "activation-smoothing",
+        "domain-calibration-static-scales",
+        "sensitive-layer-exemption:attention",
+        "sensitive-layer-exemption:mlp-down-proj"
+      ],
+      "recipe_sha256": "87b37e6e185bcdbd06cdb3b79552f422f51d8839652fa058fce410b33e1740ef",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 1
+    },
+    {
+      "arm_id": "a7-w2",
+      "lever_classes": [
+        "combo:top1+top2 (deterministic rule, see ADDENDUM-02)"
+      ],
+      "recipe_sha256": "composed-at-runtime; recorded in run archive",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 2
+    },
+    {
+      "arm_id": "a8-w2",
+      "lever_classes": [
+        "combo:top1+top3 (deterministic rule, see ADDENDUM-02)"
+      ],
+      "recipe_sha256": "composed-at-runtime; recorded in run archive",
+      "serve_extra": "--quantization compressed-tensors",
+      "uses_base_model": false,
+      "wave": 2
+    }
+  ],
+  "pilot": "003",
+  "stage": "07-lever-screening"
+}
