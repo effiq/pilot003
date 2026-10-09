@@ -15,7 +15,7 @@
 #     recipe is resolved from the pod-local custody chain and its sha256
 #     must equal the value recorded at screening time.
 #   - Judge prompt byte-identical to stage 05; Amendment-01 mechanics
-#     (reasoning excluded; null/empty content = error; max_tokens 1024).
+#     (reasoning disabled at generation — reasoning={"enabled": false}; null/empty content = error; max_tokens 1024).
 #   - Panel (frozen, ADDENDUM-02 §panel): SIZE 3. The original red-dot
 #     judge (deepseek/deepseek-chat-v3-0324) is MANDATORY — a repair that
 #     only works after benching the referee is not a repair. If it is
@@ -662,7 +662,7 @@ if not KEY.startswith("sk-or-") and "openrouter.ai" in ORBASE:
 def call_api(model, messages, max_tokens, timeout=120):
     body = json.dumps(dict(model=model, messages=messages, temperature=0,
                            max_tokens=max_tokens,
-                           reasoning={"exclude": True})).encode()
+                           reasoning={"enabled": False})).encode()
     req = urllib.request.Request(
         f"{ORBASE}/chat/completions", data=body,
         headers={"Authorization": f"Bearer {KEY}",
