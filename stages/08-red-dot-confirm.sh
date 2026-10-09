@@ -419,6 +419,10 @@ spec = json.loads(os.environ["RJSON"])
 recipe = spec["recipe"]
 cdir = os.environ["CKPT_DIR"]
 calib = [json.loads(l)["text"] for l in open(os.environ["CALIB_JSONL"])]
+from datasets import Dataset as _HFDS
+def _hfds_from_texts(texts):
+    return _HFDS.from_list([{"text": t} for t in texts])
+
 assert len(calib) == 256
 try:
     import llmcompressor
@@ -434,8 +438,8 @@ if "smoothing" in recipe:
 q = recipe["quantization"]
 mods.append(QuantizationModifier(targets=q["targets"], scheme=q["scheme"], ignore=q["ignore"]))
 t0 = time.time()
-oneshot(model=os.environ["MODEL"], revision=os.environ["MODEL_REV"],
-        dataset=[{"text": t} for t in calib], recipe=mods, output_dir=cdir,
+oneshot(model=os.environ["MODEL"], model_revision=os.environ["MODEL_REV"],
+        dataset=_hfds_from_texts(calib), recipe=mods, output_dir=cdir,
         num_calibration_samples=recipe["calibration"]["n_samples"],
         max_seq_length=recipe["calibration"]["max_seq_len"])
 def tree_sha(root):
@@ -482,6 +486,10 @@ recipe = spec["recipe"]
 cdir = os.environ["CKPT_DIR"]
 calib_p = os.environ["CALIB_JSONL"]
 calib = [json.loads(l)["text"] for l in open(calib_p)]
+from datasets import Dataset as _HFDS
+def _hfds_from_texts(texts):
+    return _HFDS.from_list([{"text": t} for t in texts])
+
 assert len(calib) == 256, f"calibration archive row count {len(calib)} != 256"
 try:
     import llmcompressor
@@ -497,8 +505,8 @@ if "smoothing" in recipe:
 q = recipe["quantization"]
 mods.append(QuantizationModifier(targets=q["targets"], scheme=q["scheme"], ignore=q["ignore"]))
 t0 = time.time()
-oneshot(model=os.environ["MODEL"], revision=os.environ["MODEL_REV"],
-        dataset=[{"text": t} for t in calib], recipe=mods, output_dir=cdir,
+oneshot(model=os.environ["MODEL"], model_revision=os.environ["MODEL_REV"],
+        dataset=_hfds_from_texts(calib), recipe=mods, output_dir=cdir,
         num_calibration_samples=recipe["calibration"]["n_samples"],
         max_seq_length=recipe["calibration"]["max_seq_len"])
 def tree_sha(root):

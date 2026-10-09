@@ -584,6 +584,10 @@ spec = json.loads(os.environ["RJSON"])
 arm, recipe = spec["arm_id"], spec["recipe"]
 cdir = os.environ["CKPT_DIR"]
 calib = [json.loads(l)["text"] for l in open(os.environ["CALIB_JSONL"])]
+from datasets import Dataset as _HFDS
+def _hfds_from_texts(texts):
+    return _HFDS.from_list([{"text": t} for t in texts])
+
 try:
     import llmcompressor
     from llmcompressor import oneshot
@@ -599,8 +603,8 @@ if "smoothing" in recipe:
 q = recipe["quantization"]
 mods.append(QuantizationModifier(targets=q["targets"], scheme=q["scheme"], ignore=q["ignore"]))
 t0 = time.time()
-oneshot(model=os.environ["MODEL"], revision=os.environ["MODEL_REV"],
-        dataset=[{"text": t} for t in calib], recipe=mods,
+oneshot(model=os.environ["MODEL"], model_revision=os.environ["MODEL_REV"],
+        dataset=_hfds_from_texts(calib), recipe=mods,
         output_dir=cdir,
         num_calibration_samples=recipe["calibration"]["n_samples"],
         max_seq_length=recipe["calibration"]["max_seq_len"])
@@ -630,6 +634,7 @@ with open(os.environ["LOCAL_RECIPE_LOG"], "a") as f:
     f.write(json.dumps(dict(public, recipe=recipe), sort_keys=True) + "\n")
 print(f"checkpoint built: {arm} sha256={csha[:16]}… llmcompressor={ver} ({public['build_seconds']}s)")
 PY
+  [ -f "$cdir/config.json" ] || { echo "checkpoint incomplete for $arm: $cdir missing config.json" >&2; return 1; }
   echo "$cdir"
 }
 
