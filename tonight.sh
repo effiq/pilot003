@@ -42,9 +42,10 @@ die() { echo "FATAL: $*" >&2; exit 1; }
 
 # ---------- 0. 私有件在位检查（不读内容，只查存在与权限） ----------
 [ -f "$TOKEN_FILE" ] || die "missing $TOKEN_FILE (GitHub PAT, chmod 600)"
-[ -f "$ENV_DIR/openrouter.key" ] || die "missing $ENV_DIR/openrouter.key"
+# 注意文件名与 Pilot 002 惯例一致：openrouter-key（连字符），stage 脚本默认读它
+[ -f "$ENV_DIR/openrouter-key" ] || die "missing $ENV_DIR/openrouter-key"
 [ -f "$ENV_DIR/arms-recipes.json" ] || die "missing $ENV_DIR/arms-recipes.json (私有配方文件，未就位不能开工)"
-for f in "$TOKEN_FILE" "$ENV_DIR/openrouter.key" "$ENV_DIR/arms-recipes.json"; do
+for f in "$TOKEN_FILE" "$ENV_DIR/openrouter-key" "$ENV_DIR/arms-recipes.json"; do
   perm=$(stat -c '%a' "$f")
   [ "$perm" = "600" ] || die "$f permission is $perm, must be 600: chmod 600 $f"
 done

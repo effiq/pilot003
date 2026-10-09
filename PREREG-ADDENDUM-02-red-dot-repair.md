@@ -77,7 +77,7 @@ Qwen/Qwen2.5-14B-Instruct @ revision `cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8`,
 | stages/07-lever-screening.sh | `fc2d0e7ce13a45f8c1a0fd20bf56a4b5edfc7d5353f5d77b856fe4ec5b7896ba` |
 | stages/08-red-dot-confirm.sh | `1593640411bc36313c301540a7868941db6069172afc31738f4db3191b7d62bb` |
 | stages/09-tuned-perf.sh | `83d2bd9f3dfacd66f4bdc1d0379fb4f5a1d5acbdf89478282167dbddd6e0c3f0` |
-| tonight.sh (pod runner) | `fcc868f615bf399adf657b829a7cf2ab2d1d2c6ef6b90cacf3145d7bf4d6060c` |
+| tonight.sh (pod runner) | `254abadf2a29d82903f8609ed6448ee4929358f30e30de33c2507602457bcc4e` |
 
 Per-recipe sha256 values for the six wave-1 arms are frozen inside arms-manifest.json (`a1 de55c8bc…`, `a2 0785c061…`, `a3 9c95595c…`, `a4 5065e67e…`, `a5 c594b379…`, `a6 87b37e6e…` — full values in the manifest). Wave-2 recipe hashes are composed at runtime and recorded in the run archive before use.
 
@@ -111,3 +111,5 @@ Every verdict file carries a one-command recomputation path:
 ---
 
 *Frozen by the operator (老板) and the AI engineering arm, 2026-10-08. First execution starts only after this file and the artifacts in §3 are uploaded to the public repo.*
+
+**Revision history (pre-execution only):** 2026-10-09 — tonight.sh key-file name aligned to the Pilot 002 convention (`~/pilot-env/openrouter-key`); §3 hash updated. No design, threshold, seed, or arm content changed. No stage had been executed at the time of this revision.
