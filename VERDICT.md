@@ -121,7 +121,9 @@ Computed after the sealed verdict, on public archive data only:
 
 1. **The heaviest slice tells the cost story.** Run 3 (the busiest hour pair, the
    same slice where Pilot 002's BF16 arm collapsed) shows log-ratio +0.9822 (≈2.67×)
-   for the tuned arm, versus +2.2380 (≈20×) for stock FP8 in Pilot 002. Hypothesis,
+   for the tuned arm, versus +2.2380 (≈9.4×) for stock FP8 in Pilot 002 (that
+   archive's raw per-run mean ratio reads 20.3× — either statistic, an order of
+   magnitude more escape). Hypothesis,
    untested: exempting attention projections from FP8 leaves more compute/memory
    pressure exactly where the capacity knee bites, so the tuned arm escapes the
    saturation collapse less completely than full FP8 did.
