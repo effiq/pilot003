@@ -1,0 +1,60 @@
+{
+  "ci95_ratio": [
+    1.4328092735737454,
+    2.006171388430107
+  ],
+  "input_sha256": {
+    "run1_armA": "0425cc547922e5d96b888df4f151ab05fcde6f8e58a8a27f8e0eb5c5115acf15",
+    "run1_armC": "c21cf74fa9b554dc310ef922a0913868abfed66a741feb4e7aaf3a0c8d7802d2",
+    "run2_armA": "bb52a6c0060f275653baafd7859c0829f02ee65cdb42967205a57a3ca90ca946",
+    "run2_armC": "67407e6557792afece128541f47cc1108095ed0e64a9709b99012abba06af9a5",
+    "run3_armA": "eca9e8648693761c90cf03a29ec4c20e6f861337290f9d27d65119f6f511825e",
+    "run3_armC": "8bc1d23e4b84449561cccec07ee7e7539c302a11d813cbdbd2d7a22ffeee3a07",
+    "run4_armA": "098be66422885166484b240ec9487d9b5e6f3a8b69a0eaaf77e369fdbe15eb87",
+    "run4_armC": "c519c7f18aae0efb88ced714d6f050b1dfef703ced27022059cf9b618d0f7e31",
+    "run5_armA": "e322b7fdd10b9575566beb174c2e20f66d8493e8322c8f35151089da1f510c56",
+    "run5_armC": "6ee2c3815f51311a5f14e6dc3ba50bc4bf0a2e829135724fd0a001f45f48b3c2",
+    "run6_armA": "0220388238f6e027c0ed4f2866e2b68d147113c0aadc689a83cd6d1a074b957c",
+    "run6_armC": "750243b8fe95cfd11386254f398c87d8dbf3683a1f2212b2419d8cd9128e4c51"
+  },
+  "n_runs": 6,
+  "pair_counts": [
+    459,
+    794,
+    1754,
+    1209,
+    1390,
+    946
+  ],
+  "perf_gate": "FAIL",
+  "pilot": "003",
+  "pilot003_verdict": "FAIL",
+  "point_estimate_ratio": 1.6344328010466276,
+  "primary": "FAIL",
+  "quality_gate": "PASS",
+  "run_mean_log_ratios": {
+    "1": 0.32155053933330063,
+    "2": 0.3590071696476901,
+    "3": 0.9822471553043287,
+    "4": 0.4133500294481128,
+    "5": 0.4897088670652562,
+    "6": 0.3819112401229686
+  },
+  "scripts_rev": "94e94c5f",
+  "secondary": {
+    "ok": true,
+    "p95_tpot_ms": {
+      "A": 331.29339999999996,
+      "C": 221.96264999999988
+    },
+    "p95_ttft_s": {
+      "A": 10.116239999999971,
+      "C": 1.5966449999999996
+    },
+    "tpot_ratio": 0.6699881434402252,
+    "ttft_ratio": 0.15782988541197165
+  },
+  "stage": "09-tuned-perf",
+  "threshold": 1.5,
+  "threshold_protocol": 1.2
+}

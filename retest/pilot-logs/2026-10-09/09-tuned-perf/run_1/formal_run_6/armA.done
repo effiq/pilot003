@@ -1,0 +1,16 @@
+{
+  "arm": "A",
+  "status": "ok",
+  "rows": 946,
+  "ok": 946,
+  "errors": 0,
+  "mean_tps": 12.792163,
+  "mean_ttft_s": 0.556008,
+  "mean_tpot_ms": 70.722066,
+  "mean_e2e_s": 6.222424,
+  "completion_tokens_total": 86991,
+  "scheduled": 946,
+  "window_s": 900.0,
+  "raw_sha256": "0220388238f6e027c0ed4f2866e2b68d147113c0aadc689a83cd6d1a074b957c",
+  "raw_file": "armA.jsonl"
+}

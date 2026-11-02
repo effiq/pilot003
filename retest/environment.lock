@@ -1,0 +1,13 @@
+# Pilot 003 — environment anchor (published scope of VERDICT.md)
+gpu: NVIDIA L40S 48GB (single)
+engine: vLLM 0.31.0
+torch: 2.13.0+cu130
+builder: llmcompressor 0.12.0 + compressed-tensors 0.17.0
+model: Qwen/Qwen2.5-14B-Instruct
+model_revision: cf98f3b3bbb457ad9e2bb7baf9a0125b6b88caa8
+arm_R: BF16 baseline
+arm_a1_control: stock FP8 dynamic (vLLM built-in) — Pilot 002's published arm-B configuration
+custom_arms: a2..a8, gate-layer recipe parameters withheld pending patent counsel review; custody sha256 published in arms-manifest.json
+workload: Pilot 002 trace-anchored slices (Azure LLM Inference Trace 2024, CC-BY), operating point r=1/256 C=4 frozen in bundled chosen.json
+statistics: paired bootstrap, seed 20262002, 100000 resamples; quality panel 3 judges, worst-judge rule, families >= 2
+note: hardware-bound measurement — claims hold for this environment; re-measurement on other hardware is a new measurement under the same protocol

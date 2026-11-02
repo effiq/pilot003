@@ -1,0 +1,53 @@
+{
+  "candidate": "a4-exempt-attn",
+  "panel": [
+    "deepseek/deepseek-chat-v3-0324",
+    "z-ai/glm-4.6",
+    "deepseek/deepseek-v3.1-terminus"
+  ],
+  "per_judge": {
+    "deepseek/deepseek-chat-v3-0324": {
+      "axis_delta": {
+        "clarity": 0.033333333333333215,
+        "correctness": 0.086666666666666,
+        "instruction_following": 0.18666666666666654
+      },
+      "clarity_ci": [
+        -0.25333333333333335,
+        0.32
+      ],
+      "gate_ok": true,
+      "overall": 0.10222222222222223
+    },
+    "deepseek/deepseek-v3.1-terminus": {
+      "axis_delta": {
+        "clarity": 0.3600000000000003,
+        "correctness": 0.3733333333333331,
+        "instruction_following": 0.45999999999999996
+      },
+      "clarity_ci": [
+        0.02,
+        0.7
+      ],
+      "gate_ok": true,
+      "overall": 0.3977777777777778
+    },
+    "z-ai/glm-4.6": {
+      "axis_delta": {
+        "clarity": 0.08666666666666689,
+        "correctness": 0.21333333333333382,
+        "instruction_following": 0.16666666666666696
+      },
+      "clarity_ci": [
+        -0.13333333333333333,
+        0.32
+      ],
+      "gate_ok": true,
+      "overall": 0.15555555555555556
+    }
+  },
+  "pilot": "003",
+  "quality_gate": "PASS",
+  "scripts_rev": "318813e6",
+  "stage": "08-red-dot-confirm"
+}

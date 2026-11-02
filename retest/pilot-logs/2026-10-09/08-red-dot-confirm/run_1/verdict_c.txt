@@ -1,0 +1,51 @@
+STAGE 08 VERDICT — RED-DOT CONFIRM (PILOT 003, single-shot confirmation)
+question: does the stage-07 winning lever configuration bring the sealed stage-05
+clarity breach (-0.127 vs tolerance 0.1) back within tolerance on the frozen 150,
+under a 3-judge panel that INCLUDES the original red-dot judge?
+status: Pilot 003 verdict component; does NOT modify any sealed Pilot 002 verdict
+generation: serving mode, temperature=0, concurrency 8, natural stopping
+blind map reused from the sealed stage-05 archive (identical presentation order)
+
+candidate arm: a4-exempt-attn (recipe_sha256=5065e67e9948f308…)
+source archive (stage 05, sealed): /root/effiq/pilot-logs/2026-10-08/05-quality-gate/run_1
+  frozen_set.jsonl: sha256=728b2f8354701a301467afaf52d643d12a679af5c41542bb1701634e4235cf7d
+  gen_A.jsonl (BF16 reference): sha256=16df35ccad32cc60a5785ce87fa96e325487b66ec3000e3fa04e6479b886c8cd
+  blind_map.jsonl: sha256=684aea8dcc33ce4f88d9aa8644007cdb8ace0e4ff331a124b8c62fe1c7e76392
+  gen_C.jsonl (tuned): sha256=38b12c4791f84b87c4e2bc07247bcb3827bd3e7eb565f3931e34fcf1329efbdf
+  judge_raw_c.jsonl: sha256=ed7ebe8ef57a94023d04d7e174fbb799d5cee72861bf1e2b73ef2ce1254a9e5d
+  confirm checkpoint: sha256=539cee71c6163153… (screening build: 539cee71c6163153…; identical)
+scripts_rev=318813e6
+
+panel judges (3/3): deepseek/deepseek-chat-v3-0324, z-ai/glm-4.6, deepseek/deepseek-v3.1-terminus
+original red-dot judge present: True
+judged rows: 450 / 450
+
+[judge: deepseek/deepseek-chat-v3-0324 (original red-dot judge)]
+  correctness           : A(bf16)=7.167  C(tuned)=7.253  delta=+0.087
+  instruction_following : A(bf16)=6.860  C(tuned)=7.047  delta=+0.187
+  clarity               : A(bf16)=6.727  C(tuned)=6.760  delta=+0.033
+  overall pooled delta (C - A): +0.102  ->  per-judge gate: PASS
+  [descriptive] clarity delta 95% bootstrap CI: [-0.253, +0.320] (seed=20261012)
+
+[judge: z-ai/glm-4.6]
+  correctness           : A(bf16)=6.213  C(tuned)=6.427  delta=+0.213
+  instruction_following : A(bf16)=4.020  C(tuned)=4.187  delta=+0.167
+  clarity               : A(bf16)=4.187  C(tuned)=4.273  delta=+0.087
+  overall pooled delta (C - A): +0.156  ->  per-judge gate: PASS
+  [descriptive] clarity delta 95% bootstrap CI: [-0.133, +0.320] (seed=20261012)
+
+[judge: deepseek/deepseek-v3.1-terminus]
+  correctness           : A(bf16)=5.247  C(tuned)=5.620  delta=+0.373
+  instruction_following : A(bf16)=4.460  C(tuned)=4.920  delta=+0.460
+  clarity               : A(bf16)=5.120  C(tuned)=5.480  delta=+0.360
+  overall pooled delta (C - A): +0.398  ->  per-judge gate: PASS
+  [descriptive] clarity delta 95% bootstrap CI: [+0.020, +0.700] (seed=20261012)
+
+quality gate rule: ALL 3 judges must pass (worst-judge rule); worst overall: deepseek/deepseek-chat-v3-0324 (+0.102)
+
+QUALITY GATE: PASS
+
+next: stage 09 measures the tuned configuration's performance gate (CI lower bound >= 1.50x).
+The Pilot 003 verdict = quality gate AND performance gate.
+
+This file is reproducible from the archived logs alone: bash stages/08-red-dot-confirm.sh --verify <run_dir>

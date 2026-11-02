@@ -1,0 +1,39 @@
+STAGE 09 VERDICT — PILOT 003 TUNED-PERFORMANCE GATE
+computed from raw archives: /root/effiq/pilot-logs/2026-10-09/09-tuned-perf/run_1
+scripts_rev=94e94c5f  bootstrap seed=20262002  resamples=100000
+gate: paired-bootstrap CI lower bound >= 1.5x (Protocol-Lock continuity reference 1.2x reported)
+no straddle extension is pre-registered for Pilot 003 — the n=6 bootstrap decides
+disclosure (carried): operating point r=1/256, C=4, shortfall disclosed per protocol
+
+[input integrity] per-block raw JSONL sha256 vs markers:
+  run 1 arm A: OK (0425cc547922e5d9…)
+  run 1 arm C: OK (c21cf74fa9b554dc…)
+  run 2 arm A: OK (bb52a6c0060f2756…)
+  run 2 arm C: OK (67407e6557792afe…)
+  run 3 arm A: OK (eca9e8648693761c…)
+  run 3 arm C: OK (8bc1d23e4b844495…)
+  run 4 arm A: OK (098be66422885166…)
+  run 4 arm C: OK (c519c7f18aae0efb…)
+  run 5 arm A: OK (e322b7fdd10b9575…)
+  run 5 arm C: OK (6ee2c3815f51311a…)
+  run 6 arm A: OK (0220388238f6e027…)
+  run 6 arm C: OK (750243b8fe95cfd1…)
+
+[runs] n=6 formal runs; paired requests per run: [459, 794, 1754, 1209, 1390, 946]
+  run-level mean log-ratios (C/A): run 1: +0.3216, run 2: +0.3590, run 3: +0.9822, run 4: +0.4134, run 5: +0.4897, run 6: +0.3819
+  point estimate: exp(mean) = 1.6344x
+  paired bootstrap 95% CI: exp([+0.3596, +0.6962]) = [1.4328, 2.0062]x
+  rule: PASS iff CI lower bound >= 1.5x  ->  primary = FAIL
+  [continuity] vs Protocol-Lock threshold 1.2x: PASS
+
+[secondary] pooled tail-latency non-inferiority (tolerance 5%)
+  P95 TPOT: A=331.29ms C=221.96ms ratio=0.6700  OK
+  P95 TTFT: A=10.116s C=1.597s ratio=0.1578  OK
+
+PERFORMANCE GATE: FAIL
+QUALITY GATE (stage 08, archived): PASS
+
+PILOT 003 VERDICT: FAIL
+  (PASS requires BOTH gates; a FAIL here publishes in full per ADDENDUM-02)
+
+Reproduce: bash stages/09-tuned-perf.sh --verify <run_dir>

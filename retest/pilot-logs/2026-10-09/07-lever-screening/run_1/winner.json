@@ -1,0 +1,8 @@
+{
+  "arm_id": "a4-exempt-attn",
+  "levers": 1,
+  "recipe_sha256": "5065e67e9948f3085957eeba5e29e14afd773636e0d146f639622549e68c3df8",
+  "screening_clarity_delta": 0.35,
+  "screening_overall_delta": 0.45,
+  "scripts_rev": "5762be1b"
+}

@@ -1,0 +1,40 @@
+{
+  "run_idx": 6,
+  "pair_id": "pair_6",
+  "run_seed": 20264006,
+  "arm_order": [
+    "C",
+    "A"
+  ],
+  "D": 256,
+  "C": 4,
+  "window_s": 900.0,
+  "fallback": true,
+  "disclosure": "no grid configuration met the SLO; lightest configuration used, shortfall disclosed per protocol",
+  "scripts_rev": "94e94c5f",
+  "note": "descriptive means only; the paired-bootstrap CI (seed 20262002) and the P95 gate are computed exclusively by the sealed verdict phase of this stage",
+  "per_arm": {
+    "A": {
+      "rows": 946,
+      "ok": 946,
+      "errors": 0,
+      "skipped_overlength": 0,
+      "mean_tps": 12.792163,
+      "mean_ttft_s": 0.556008,
+      "mean_tpot_ms": 70.722066,
+      "mean_e2e_s": 6.222424
+    },
+    "C": {
+      "rows": 946,
+      "ok": 946,
+      "errors": 0,
+      "skipped_overlength": 0,
+      "mean_tps": 18.672989,
+      "mean_ttft_s": 0.393311,
+      "mean_tpot_ms": 46.503816,
+      "mean_e2e_s": 4.260826
+    }
+  },
+  "paired_ok_requests": 946,
+  "paired_mean_ratio_C_over_A": 1.481313
+}

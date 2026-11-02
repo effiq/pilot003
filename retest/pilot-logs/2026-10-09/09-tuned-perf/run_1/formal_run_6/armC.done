@@ -1,0 +1,16 @@
+{
+  "arm": "C",
+  "status": "ok",
+  "rows": 946,
+  "ok": 946,
+  "errors": 0,
+  "mean_tps": 18.672989,
+  "mean_ttft_s": 0.393311,
+  "mean_tpot_ms": 46.503816,
+  "mean_e2e_s": 4.260826,
+  "completion_tokens_total": 86991,
+  "scheduled": 946,
+  "window_s": 900.0,
+  "raw_sha256": "750243b8fe95cfd11386254f398c87d8dbf3683a1f2212b2419d8cd9128e4c51",
+  "raw_file": "armC.jsonl"
+}

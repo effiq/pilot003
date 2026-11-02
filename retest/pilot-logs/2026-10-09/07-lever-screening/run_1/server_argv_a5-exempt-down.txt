@@ -1,0 +1,1 @@
+server_argv: vllm serve /root/effiq/p003-ckpt/a5-exempt-down --no-enable-prefix-caching --max-model-len 32768 --quantization compressed-tensors --port 8000

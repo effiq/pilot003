@@ -1,0 +1,9 @@
+{
+  "arm_id": "a4-exempt-attn",
+  "build_seconds": 43.5,
+  "checkpoint_dir": "/root/effiq/p003-ckpt/a4-exempt-attn-perf",
+  "checkpoint_sha256": "539cee71c6163153b5fea49fd257396395878dc89d91b6859728d96ba02cc420",
+  "llmcompressor_version": "0.12.0",
+  "recipe_sha256": "5065e67e9948f3085957eeba5e29e14afd773636e0d146f639622549e68c3df8",
+  "ts_utc": "2026-10-09T12:57:41Z"
+}

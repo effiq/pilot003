@@ -1,0 +1,35 @@
+STAGE 07 VERDICT — LEVER SCREENING (PILOT 003, phase 1 of 2: indicative)
+tolerance=0.1; proceed rule: winner clarity delta >= -0.05 (declared transfer margin)
+screening conclusions are INDICATIVE — the winner gets ONE confirmation attempt in stage 08
+generation: serving mode, temperature=0, concurrency 8, natural stopping
+blind: per (arm,item) sha256 bit, seed=20261014; reference arm R = BF16 defaults
+
+  screening_set.jsonl: sha256=d0b3da96251019d34006ade5fdb0017b3850770abeabc89cc8a6f16a29a9b5ab
+  gen_R.jsonl: sha256=3372ae950ef192667f008a52bc87085988a1f94cf1aed3b07750258c8186e5af
+  judge_raw_screen.jsonl: sha256=7f5f52357b7425c7a6f7832fdea3725c665a0a8c9b1fc7046e8fa4c4e924f152
+scripts_rev=5762be1b
+
+screening judge(s): deepseek/deepseek-chat-v3.1
+arms with judged rows: a1-control, a2-smooth, a3-calib-static, a4-exempt-attn, a5-exempt-down, a6-all, a7-w2, a8-w2
+judged rows: 320 / 40 per arm
+
+[per-arm screening deltas vs BF16 reference (40 items, 10-pt scale)]
+  arm                     clarity  overall
+  a1-control               -0.250   -0.067
+  a2-smooth                -0.075   +0.050
+  a3-calib-static          -0.225   -0.217
+  a4-exempt-attn           +0.350   +0.450
+  a5-exempt-down           +0.075   +0.142
+  a6-all                   +0.125   +0.217
+  a7-w2                    +0.275   +0.458
+  a8-w2                    +0.175   +0.108
+
+[control] a1-control (= exact stage-05 arm-B config) clarity delta on screening set: -0.250
+
+[selection] winner = a4-exempt-attn (clarity +0.350, overall +0.450, levers=1)
+[descriptive] winner clarity 95% bootstrap CI: [-0.250, +0.975] (seed=20261012, n=40)
+
+OUTCOME: PROCEED — a4-exempt-attn advances to the single-shot confirmation (stage 08).
+discipline: stage 08 is the ONLY confirmation attempt; a miss is a published FAIL.
+
+This file is reproducible from the archived logs alone: bash stages/07-lever-screening.sh --verify <run_dir>
