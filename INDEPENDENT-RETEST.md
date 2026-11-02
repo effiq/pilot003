@@ -27,7 +27,12 @@ can be verified against those hashes. What this means for you:
 
 ## Track 1 — audit / recompute (no GPU)
 
-Requirements: `bash`, `python3` ≥ 3.10 with `numpy`.
+Requirements: Linux or macOS, `bash`, `python3` ≥ 3.10 with `numpy`. Nothing
+else. No network beyond the initial clone. On Debian/Ubuntu (incl. WSL):
+`sudo apt install -y python3-numpy`; elsewhere: `pip3 install numpy`.
+
+If `~/effiq/pilot003` already exists from an older clone, move it aside first:
+`mv ~/effiq/pilot003 ~/effiq/pilot003-old` (and `rm -f ~/effiq/pilot-logs`).
 
 ```bash
 mkdir -p ~/effiq && cd ~/effiq
